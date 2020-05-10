@@ -1,45 +1,34 @@
 # project/__init__.py
 
 import os
-from flask import Flask, jsonify
-from flask_restx import Resource, Api
+
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-# instantiate the app
-app = Flask(__name__)
-
-api = Api(app)
-
-# set config
-app_settings = os.getenv('APP_SETTINGS')
-app.config.from_object(app_settings)
-
-# Add the following, to ensure proper config was loaded
-# verify with 'docker-compose logs'
-# import sys
-# print(app.config, file=sys.stderr)
-
-db = SQLAlchemy(app)
+# instantiate the db
+db = SQLAlchemy()
 
 
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(128), nullable=False)
-    email = db.Column(db.String(128), nullable=False)
-    active = db.Column(db.Boolean(), default=True, nullable=False)
+def create_app(script_info=None):
 
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
+    # instantiate the app
+    app = Flask(__name__)
 
-class Ping(Resource):
-    def get(self):
-        return {
-            'status': 'success',
-            'message': 'pong!'
-        }
+    # set config
+    app_settings = os.getenv('APP_SETTINGS')
+    app.config.from_object(app_settings)
 
+    # set up extensions
+    db.init_app(app)
 
-api.add_resource(Ping, '/ping')
+    # register blueprints
+    from project.api.ping import ping_blueprint
+    app.register_blueprint(ping_blueprint)
+
+    # shell context for flask cli
+    @app.shell_context_processor
+    def ctx():
+        return {'app': app, 'db': db}
+
+    return app
