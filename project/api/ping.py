@@ -2,7 +2,8 @@
 
 
 from flask import Blueprint
-from flask_restx import Resource, Api
+from flask_restx import Api
+from flask_restx import Resource
 
 
 ping_blueprint = Blueprint('ping', __name__)
