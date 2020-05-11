@@ -1,6 +1,7 @@
 Flask==1.1.1
 Flask-RESTX==0.1.1
 Flask-SQLAlchemy==2.4.1
+gunicorn==20.0.4
 psycopg2-binary==2.8.4
 pytest==5.3.5
 werkzeug==0.16.1
