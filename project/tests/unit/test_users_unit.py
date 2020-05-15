@@ -12,8 +12,10 @@ import project.api.users
 def test_add_user(test_app, monkeypatch):
     def mock_get_user_by_email(email):
         return None
+
     def mock_add_user(username, email):
         return True
+
     monkeypatch.setattr(project.api.users, "get_user_by_email", mock_get_user_by_email)
     monkeypatch.setattr(project.api.users, "add_user", mock_add_user)
 
@@ -51,8 +53,10 @@ def test_add_user_invalid_json_keys(test_app, monkeypatch):
 def test_add_user_duplicate_email(test_app, monkeypatch):
     def mock_get_user_by_email(email):
         return True
+
     def mock_add_user(username, email):
         return True
+
     monkeypatch.setattr(project.api.users, "get_user_by_email", mock_get_user_by_email)
     monkeypatch.setattr(project.api.users, "add_user", mock_add_user)
     client = test_app.test_client()
@@ -77,8 +81,9 @@ def test_single_user(test_app, monkeypatch):
             "id": 1,
             "username": "jeffrey",
             "email": "jeffrey@testdriven.io",
-            "created_date": datetime.now()
+            "created_date": datetime.now(),
         }
+
     monkeypatch.setattr(project.api.users, "get_user_by_id", mock_get_user_by_id)
     client = test_app.test_client()
     resp = client.get("/users/1")
@@ -91,6 +96,7 @@ def test_single_user(test_app, monkeypatch):
 def test_single_user_incorrect_id(test_app, monkeypatch):
     def mock_get_user_by_id(user_id):
         return None
+
     monkeypatch.setattr(project.api.users, "get_user_by_id", mock_get_user_by_id)
     client = test_app.test_client()
     resp = client.get("/users/999")
@@ -106,15 +112,16 @@ def test_all_users(test_app, monkeypatch):
                 "id": 1,
                 "username": "michael",
                 "email": "michael@mherman.org",
-                "created_date": datetime.now()
+                "created_date": datetime.now(),
             },
             {
                 "id": 1,
                 "username": "fletcher",
                 "email": "fletcher@notreal.com",
-                "created_date": datetime.now()
-            }
+                "created_date": datetime.now(),
+            },
         ]
+
     monkeypatch.setattr(project.api.users, "get_all_users", mock_get_all_users)
     client = test_app.test_client()
     resp = client.get("/users")
@@ -132,16 +139,21 @@ def test_remove_user(test_app, monkeypatch):
         def __init__(self, *args, **kwargs):
             super(AttrDict, self).__init__(*args, **kwargs)
             self.__dict__ = self
+
     def mock_get_user_by_id(user_id):
         d = AttrDict()
-        d.update({
-            "id": 1,
-            "username": "user-to-be-removed",
-            "email": "remove-me@testdriven.io"
-        })
+        d.update(
+            {
+                "id": 1,
+                "username": "user-to-be-removed",
+                "email": "remove-me@testdriven.io",
+            }
+        )
         return d
+
     def mock_delete_user(user):
         return True
+
     monkeypatch.setattr(project.api.users, "get_user_by_id", mock_get_user_by_id)
     monkeypatch.setattr(project.api.users, "delete_user", mock_delete_user)
     client = test_app.test_client()
@@ -154,6 +166,7 @@ def test_remove_user(test_app, monkeypatch):
 def test_remove_user_incorrect_id(test_app, monkeypatch):
     def mock_get_user_by_id(user_id):
         return None
+
     monkeypatch.setattr(project.api.users, "get_user_by_id", mock_get_user_by_id)
     client = test_app.test_client()
     resp = client.delete("/users/999")
@@ -167,16 +180,15 @@ def test_update_user(test_app, monkeypatch):
         def __init__(self, *args, **kwargs):
             super(AttrDict, self).__init__(*args, **kwargs)
             self.__dict__ = self
+
     def mock_get_user_by_id(user_id):
         d = AttrDict()
-        d.update({
-            "id": 1,
-            "username": "me",
-            "email": "me@testdriven.io"
-        })
+        d.update({"id": 1, "username": "me", "email": "me@testdriven.io"})
         return d
+
     def mock_update_user(user, username, email):
         return True
+
     monkeypatch.setattr(project.api.users, "get_user_by_id", mock_get_user_by_id)
     monkeypatch.setattr(project.api.users, "update_user", mock_update_user)
     client = test_app.test_client()
@@ -208,9 +220,12 @@ def test_update_user(test_app, monkeypatch):
         ],
     ],
 )
-def test_update_user_invalid(test_app, monkeypatch, user_id, payload, status_code, message):
+def test_update_user_invalid(
+    test_app, monkeypatch, user_id, payload, status_code, message
+):
     def mock_get_user_by_id(user_id):
         return None
+
     monkeypatch.setattr(project.api.users, "get_user_by_id", mock_get_user_by_id)
     client = test_app.test_client()
     resp = client.put(
