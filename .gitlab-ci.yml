@@ -40,7 +40,7 @@ test:
     - pip install -r requirements.txt
     - pip install black flake8 isort pytest
     - pytest "project/tests" -p no:warnings
-    - flake8 project --max-line-length 119
+    - flake8 project --max-line-length=119
     - black project --check
     - isort project/**/*.py --check-only
 
