@@ -43,7 +43,6 @@ test:
     - flake8 project
     - black project --check
     - isort project/**/*.py --check-only
-    - isort project/**/**/*.py --check-only
 
 deploy:
   stage: deploy
