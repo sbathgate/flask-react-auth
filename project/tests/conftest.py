@@ -3,7 +3,7 @@
 import pytest
 
 from project import create_app, db
-from project.api.models import User
+from project.api.users.models import User
 
 
 @pytest.fixture(scope="module")
