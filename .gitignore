@@ -3,3 +3,4 @@ __pycache__
 venv
 .coveragerc
 htmlcov/
+node_modules
