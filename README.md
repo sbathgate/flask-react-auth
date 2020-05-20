@@ -108,6 +108,12 @@
 #### Run the tests with coverage:
 ```$ docker-compose exec client npm test --coverage```
 
+#### Check formatting with Prettier:
+```$ docker-compose exec client npm run prettier:check```
+
+#### Lint with eslint:
+```$ docker-compose exec client npm run lint```
+
 ### Server
 #### Create the database:
 ```$ docker-compose exec users python manage.py recreate_db```
