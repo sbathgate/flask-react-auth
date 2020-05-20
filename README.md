@@ -1,6 +1,6 @@
 # Authentication with Flask, React, and Docker
 
-[![pipeline status](https://gitlab.com/sbathgate/flask-tdd-docker/badges/master/pipeline.svg)](https://gitlab.com/sbathgate/flask-tdd-docker/commits/master)
+[![pipeline status](https://gitlab.com/sbathgate/flask-react-auth/badges/master/pipeline.svg)](https://gitlab.com/sbathgate/flask-tdd-docker/commits/master)
 
 ## Quick start
 * Clone GitLab Repo: `$ git clone https://gitlab.com/sbathgate/flask-tdd-docker.git`
