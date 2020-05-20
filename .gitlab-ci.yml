@@ -20,7 +20,7 @@ build:
     - docker build
         --cache-from $IMAGE:latest
         --tag $IMAGE:latest
-        --file ./services/users/Dockerfile.prod
+        --file ./Dockerfile.prod
         --build-arg SECRET_KEY=$SECRET_KEY
         "."
     - docker push $IMAGE:latest
