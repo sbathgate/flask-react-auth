@@ -12,7 +12,13 @@ def test_add_user(test_app, test_database):
     client = test_app.test_client()
     resp = client.post(
         "/users",
-        data=json.dumps({"username": "michael", "email": "michael@testdriven.io"}),
+        data=json.dumps(
+            {
+                "username": "michael",
+                "email": "michael@testdriven.io",
+                "password": "greaterthaneight",
+            }
+        ),
         content_type="application/json",
     )
     data = json.loads(resp.data.decode())
@@ -44,12 +50,24 @@ def test_add_user_duplicate_email(test_app, test_database):
     client = test_app.test_client()
     client.post(
         "/users",
-        data=json.dumps({"username": "michael", "email": "michael@testdriven.io"}),
+        data=json.dumps(
+            {
+                "username": "michael",
+                "email": "michael@testdriven.io",
+                "password": "greaterthaneight",
+            }
+        ),
         content_type="application/json",
     )
     resp = client.post(
         "/users",
-        data=json.dumps({"username": "michael", "email": "michael@testdriven.io"}),
+        data=json.dumps(
+            {
+                "username": "michael",
+                "email": "michael@testdriven.io",
+                "password": "greaterthaneight",
+            }
+        ),
         content_type="application/json",
     )
     data = json.loads(resp.data.decode())
@@ -58,13 +76,14 @@ def test_add_user_duplicate_email(test_app, test_database):
 
 
 def test_single_user(test_app, test_database, add_user):
-    user = add_user("jeffrey", "jeffrey@testdriven.io")
+    user = add_user("jeffrey", "jeffrey@testdriven.io", "greaterthaneight")
     client = test_app.test_client()
     resp = client.get(f"/users/{user.id}")
     data = json.loads(resp.data.decode())
     assert resp.status_code == 200
     assert "jeffrey" in data["username"]
     assert "jeffrey@testdriven.io" in data["email"]
+    assert "password" not in data
 
 
 def test_single_user_incorrect_id(test_app, test_database):
@@ -77,8 +96,8 @@ def test_single_user_incorrect_id(test_app, test_database):
 
 def test_all_users(test_app, test_database, add_user):
     test_database.session.query(User).delete()
-    add_user("michael", "michael@mherman.org")
-    add_user("fletcher", "fletcher@notreal.com")
+    add_user("michael", "michael@mherman.org", "greaterthaneight")
+    add_user("fletcher", "fletcher@notreal.com", "greaterthaneight")
     client = test_app.test_client()
     resp = client.get("/users")
     data = json.loads(resp.data.decode())
@@ -88,11 +107,13 @@ def test_all_users(test_app, test_database, add_user):
     assert "michael@mherman.org" in data[0]["email"]
     assert "fletcher" in data[1]["username"]
     assert "fletcher@notreal.com" in data[1]["email"]
+    assert "password" not in data[0]
+    assert "password" not in data[1]
 
 
 def test_remove_user(test_app, test_database, add_user):
     test_database.session.query(User).delete()
-    user = add_user("user-to-be-removed", "remove-me@testdriven.io")
+    user = add_user("user-to-be-removed", "remove-me@testdriven.io", "greaterthaneight")
     client = test_app.test_client()
     resp_one = client.get("/users")
     data = json.loads(resp_one.data.decode())
@@ -117,7 +138,7 @@ def test_remove_user_incorrect_id(test_app, test_database):
 
 
 def test_update_user(test_app, test_database, add_user):
-    user = add_user("user-to-be-updated", "update-me@testdriven.io")
+    user = add_user("user-to-be-updated", "update-me@testdriven.io", "greaterthaneight")
     client = test_app.test_client()
     resp_one = client.put(
         f"/users/{user.id}",
