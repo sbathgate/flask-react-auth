@@ -52,7 +52,7 @@ def test_user_registration_duplicate_email(test_app, test_database, add_user):
 def test_user_registration_invalid_json(test_app, test_database, payload):
     client = test_app.test_client()
     resp = client.post(
-        f"/auth/register", data=json.dumps(payload), content_type="application/json",
+        "/auth/register", data=json.dumps(payload), content_type="application/json",
     )
     data = json.loads(resp.data.decode())
     assert resp.status_code == 400
