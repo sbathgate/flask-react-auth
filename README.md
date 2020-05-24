@@ -169,3 +169,7 @@
 - [ ] Add unit tests as well in a new file called test_auth_unit.py. Use monkeypatch like we did in test_users_unit.py.
 - [ ] We're currently allowing duplicate usernames. Is this okay? Probably not. Practice TDD on your own and add a test for this and then implement the code.
 - [ ] We should probably invalidate refresh tokens. We could create a new database table for this and only store a single refresh token per user.
+
+## Valuable Notes
+If you get a compilation error due to Module not found: Can't resolve 'temp'; try installing temp in the running container:
+```$ docker-compose exec client npm install react-router-dom```
