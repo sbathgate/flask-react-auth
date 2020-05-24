@@ -16,14 +16,18 @@
 ```
 ├── .gitignore
 ├── .gitlab-ci.yml
+├── Dockerfile.deploy
 ├── README.md
 ├── docker-compose.yml
+├── makefile
 ├── release.sh
 └── services
     ├── client
     │   ├── .dockerignore
+    │   ├── .eslintrc.json
     │   ├── .gitignore
     │   ├── Dockerfile
+    │   ├── Dockerfile.ci
     │   ├── README.md
     │   ├── coverage
     │   ├── package-lock.json
@@ -36,29 +40,56 @@
     │   │   ├── manifest.json
     │   │   └── robots.txt
     │   └── src
+    │       ├── App.jsx
     │       ├── components
+    │       │   ├── About.jsx
     │       │   ├── AddUser.jsx
+    │       │   ├── LoginForm.jsx
+    │       │   ├── Message.jsx
+    │       │   ├── NavBar.css
+    │       │   ├── NavBar.jsx
+    │       │   ├── RegisterForm.jsx
+    │       │   ├── UserStatus.jsx
     │       │   ├── UsersList.jsx
-    │       │   └── __tests__
-    │       │       ├── AddUser.test.jsx
-    │       │       ├── UsersList.test.jsx
-    │       │       └── __snapshots__
-    │       │           ├── AddUser.test.jsx.snap
-    │       │           └── UsersList.test.jsx.snap
+    │       │   ├── __tests__
+    │       │   │   ├── About.test.jsx
+    │       │   │   ├── AddUser.test.jsx
+    │       │   │   ├── App.test.jsx
+    │       │   │   ├── LoginForm.test.jsx
+    │       │   │   ├── Message.test.jsx
+    │       │   │   ├── NavBar.test.jsx
+    │       │   │   ├── RegisterForm.test.jsx
+    │       │   │   ├── UserStatus.test.jsx
+    │       │   │   ├── UsersList.test.jsx
+    │       │   │   └── __snapshots__
+    │       │   │       ├── About.test.jsx.snap
+    │       │   │       ├── AddUser.test.jsx.snap
+    │       │   │       ├── App.test.jsx.snap
+    │       │   │       ├── LoginForm.test.jsx.snap
+    │       │   │       ├── Message.test.jsx.snap
+    │       │   │       ├── NavBar.test.jsx.snap
+    │       │   │       ├── RegisterForm.test.jsx.snap
+    │       │   │       ├── UserStatus.test.jsx.snap
+    │       │   │       └── UsersList.test.jsx.snap
+    │       │   └── form.css
     │       ├── index.js
     │       └── setupTests.js
     └── users
         ├── .coverage
         ├── .coveragerc
         ├── .dockerignore
+        ├── .flake8
         ├── Dockerfile
         ├── Dockerfile.prod
         ├── entrypoint.sh
+        ├── htmlcov
         ├── manage.py
         ├── project
         │   ├── __init__.py
+        │   ├── .isort.cfg
         │   ├── api
         │   │   ├── __init__.py
+        │   │   ├── auth.py
         │   │   ├── ping.py
         │   │   └── users
         │   │       ├── __init__.py
@@ -75,8 +106,10 @@
         │       ├── conftest.py
         │       ├── pytest.ini
         │       ├── test_admin.py
+        │       ├── test_auth.py
         │       ├── test_config.py
         │       ├── test_ping.py
+        │       ├── test_user_model.py
         │       ├── test_users.py
         │       └── test_users_unit.py
         ├── requirements-dev.txt
@@ -156,10 +189,13 @@
 ```$ docker rmi $(docker images -q)```
 
 ## TODO:
+#### My notes:
+- [ ] Configure singular setup.cfg for flake8, black and isort.
+
 #### Test-Driven Development with Python, Flask and Docker
 - [ ] Test coverage: Add more tests to increase the overall test coverage.
 - [ ] DRY out the code: There's plenty of places in the code base that could be refactored.
-- [ ] Flask-CORS: Use Flask-CORS to handle cross-origin requests -- e.g., requests that originate from a different protocol, IP address, domain name, or port.
+- [x] Flask-CORS: Use Flask-CORS to handle cross-origin requests -- e.g., requests that originate from a different protocol, IP address, domain name, or port.
 - [ ] Caching: Add caching (where appropriate) with Flask-Cache.
 - [ ] Database migrations: Manage changes to the database through SQLAlchemy database migrations with the Flask-Migrate extension.
 
