@@ -31,6 +31,8 @@ reseed:  ## Recreate and Seed db
 
 start:  ## Run a development environment
 	@docker-compose up -d
+	@docker-compose exec users python manage.py recreate_db
+	@docker-compose exec users python manage.py seed_db	
 
 test-all: ## Run the current test suite
 	@docker-compose exec users python -m pytest "project/tests" -p no:warnings
