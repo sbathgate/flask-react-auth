@@ -154,3 +154,18 @@
 
 #### Remove images:
 ```$ docker rmi $(docker images -q)```
+
+## TODO:
+#### Test-Driven Development with Python, Flask and Docker
+- [ ] Test coverage: Add more tests to increase the overall test coverage.
+- [ ] DRY out the code: There's plenty of places in the code base that could be refactored.
+- [ ] Flask-CORS: Use Flask-CORS to handle cross-origin requests -- e.g., requests that originate from a different protocol, IP address, domain name, or port.
+- [ ] Caching: Add caching (where appropriate) with Flask-Cache.
+- [ ] Database migrations: Manage changes to the database through SQLAlchemy database migrations with the Flask-Migrate extension.
+
+#### Authentication with Flask, React, and Docker
+##### Part 2: Auth Routes
+- [ ] Try to increase the test coverage. Add tests for the remaining edge cases.
+- [ ] Add unit tests as well in a new file called test_auth_unit.py. Use monkeypatch like we did in test_users_unit.py.
+- [ ] We're currently allowing duplicate usernames. Is this okay? Probably not. Practice TDD on your own and add a test for this and then implement the code.
+- [ ] We should probably invalidate refresh tokens. We could create a new database table for this and only store a single refresh token per user.
