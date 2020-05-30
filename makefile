@@ -1,13 +1,20 @@
 default: help
 
-help: ## Output available commands
+export: ## Print export command
+	@echo "export REACT_APP_USERS_SERVICE_URL=http://localhost:5001"
+
+help:  ## Output available commands
 	@echo "Available commands:"
 	@echo
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-lint-client:  ## Run Prettier and Lint
+lint-client:  ## Run Lint
 	@docker-compose exec client npm run lint
+
+lint-prettier-check:  ## Run Prettier:Check
 	@docker-compose exec client npm run prettier:check
+
+lint-prettier-write:  ## Run Prettier:Write
 	@docker-compose exec client npm run prettier:write
 
 lint-users:  ## Run Flake8, Black and iSort
