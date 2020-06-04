@@ -206,7 +206,10 @@
 - [ ] We're currently allowing duplicate usernames. Is this okay? Probably not. Practice TDD on your own and add a test for this and then implement the code.
 - [ ] We should probably invalidate refresh tokens. We could create a new database table for this and only store a single refresh token per user.
 - [ ] Write test to ensure UserStatus redirects to login if invalid token (Part3: React Auth - part 2).
-
+- [ ] Revoke/Blacklist tokens in order to prevent abuse
+- [ ] Adding email confirmation between user registration and login
+- [ ] EXPLORE: For added protection, instead of storing refresh tokens in LocalStorage, how would you return tokens from the server in HttpOnly cookies? The Flask-JWT-Extended extension may be worth looking at.
+- [ ] Add test to ensure message disappears when 1: a user click the 'x', 2: a new message is flashed, 3: three seconds pass
 ## Valuable Notes
 If you get a compilation error due to Module not found: Can't resolve 'temp'; try installing temp in the running container:
 ```$ docker-compose exec client npm install react-router-dom```
