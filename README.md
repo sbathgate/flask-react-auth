@@ -74,11 +74,12 @@
     │       │   └── form.css
     │       ├── index.js
     │       └── setupTests.js
+    ├── nginx
+    │   └── default.conf
     └── users
         ├── .coverage
         ├── .coveragerc
         ├── .dockerignore
-        ├── .flake8
         ├── Dockerfile
         ├── Dockerfile.prod
         ├── entrypoint.sh
@@ -86,7 +87,6 @@
         ├── manage.py
         ├── project
         │   ├── __init__.py
-        │   ├── .isort.cfg
         │   ├── api
         │   │   ├── __init__.py
         │   │   ├── auth.py
@@ -193,28 +193,31 @@
 - [ ] Configure singular setup.cfg for flake8, black and isort.
 
 #### Test-Driven Development with Python, Flask and Docker
-- [ ] Test coverage: Add more tests to increase the overall test coverage.
-- [ ] DRY out the code: There's plenty of places in the code base that could be refactored.
-- [x] Flask-CORS: Use Flask-CORS to handle cross-origin requests -- e.g., requests that originate from a different protocol, IP address, domain name, or port.
-- [ ] Caching: Add caching (where appropriate) with Flask-Cache.
 - [ ] Database migrations: Manage changes to the database through SQLAlchemy database migrations with the Flask-Migrate extension.
 
 #### Authentication with Flask, React, and Docker
-##### Part 2: Auth Routes
-- [ ] Try to increase the test coverage. Add tests for the remaining edge cases.
-- [ ] Add unit tests as well in a new file called test_auth_unit.py. Use monkeypatch like we did in test_users_unit.py.
-- [ ] We're currently allowing duplicate usernames. Is this okay? Probably not. Practice TDD on your own and add a test for this and then implement the code.
-- [ ] We should probably invalidate refresh tokens. We could create a new database table for this and only store a single refresh token per user.
 ##### Part 3: React Auth - Part 2
 - [ ] Write test to ensure UserStatus redirects to login if invalid token.
-- [ ] Revoke/Blacklist tokens in order to prevent abuse
-- [ ] Adding email confirmation between user registration and login
 - [ ] EXPLORE: For added protection, instead of storing refresh tokens in LocalStorage, how would you return tokens from the server in HttpOnly cookies? The Flask-JWT-Extended extension may be worth looking at.
 ##### Part 3: React Alert Messages
 - [ ] Add test to ensure message disappears when 1: a user click the 'x', 2: a new message is flashed, 3: three seconds pass
 ##### Part 3: Update Components
-- [ ] Add ability to update user. Reuse same modal.
 - [ ] Prevent currently logged in person from deleting themselves.
+##### Part 3: Next Steps
+- [ ] Test coverage: Add more tests to increase the overall test coverage, making sure to cover any remaining edge cases.
+- [ ] Unit tests: Add unit tests (via monkeypatch) to cover the auth routes.
+- [ ] DRY out the code: There's plenty of places in the code base that could be refactored.
+- [ ] Flask CORS: Instead of allowing requests from any domain, lock down the Flask service by only allowing requests that originate from the Heroku domain.
+- [ ] Caching: Add caching (where appropriate) with Flask-Cache.
+- [ ] Duplicate usernames: Prevent duplicate usernames in the database.
+- [ ] Invalidate refresh tokens: Users can have a number of active refresh tokens. It may be worth controlling this to prevent abuse by only allowing a user to have a single refresh token at time. Create a database table for this and update the client and server-side logic.
+- [ ] Blacklist tokens: You may want to create a database table for used access and refresh tokens to prevent abuse. Again, update the client and server-side as necessary.
+- [ ] Role based authorization: Add role based authorization. Refer to the "Auth" section in Awesome Flask for more info.
+- [ ] Cross tab logout: Incorporate cross browser tab logout by adding an event listener on the refresh token in LocalStorage.
+- [ ] Transactional emailing: Add the ability to send transactional emails for email confirmation and password changes.
+- [ ] Client side: Add the ability to update a user using the same modal configured for adding a user and prevent the currently logged in user from deleting themselves in the table.
+- [ ] Hooks: Refactor the class-based React components to functions with React Hooks. Refer to Primer on React Hooks for more info on Hooks.
+
 
 ## Valuable Notes
 If you get a compilation error due to Module not found: Can't resolve 'temp'; try installing temp in the running container:
